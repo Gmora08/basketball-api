@@ -13,10 +13,11 @@ defmodule BasketballWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", BasketballWeb do
-    pipe_through :browser
+  scope "/" do
+    pipe_through :api
 
-    get "/", PageController, :index
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: BasketballWeb.Schema
+    forward "/api", Absinthe.Plug, schema: BasketballWeb.Schema, interface: :simple
   end
 
   # Other scopes may use custom stacks.

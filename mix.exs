@@ -20,7 +20,7 @@ defmodule Basketball.MixProject do
   def application do
     [
       mod: {Basketball.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :absinthe_plug]
     ]
   end
 
