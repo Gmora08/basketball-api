@@ -24,4 +24,41 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
       }
     }
   end
+
+  @query """
+  {
+    leagues(matching: "NBA") {
+      acronym
+    }
+  }
+  """
+  test "leagues query returns leagues filtered by acronym", %{conn: conn} do
+    league_fixture(%{acronym: "NBA"})
+    league_fixture(%{acronym: "LNBP"})
+    response = get(conn, "/api", query: @query)
+
+    assert json_response(response, 200) == %{
+      "data" => %{
+        "leagues" => [
+          %{"acronym" => "NBA"}
+        ]
+      }
+    }
+  end
+
+  @query """
+  {
+    leagues(matching: 123) {
+      acronym
+    }
+  }
+  """
+  test "leagues query returns errors when using a bad value for matching", %{conn: conn} do
+    league_fixture(%{acronym: "NBA"})
+    league_fixture(%{acronym: "LNBP"})
+    response = get(conn, "/api", query: @query)
+
+    assert %{"errors" => [%{"message" => message}]} = json_response(response, 200)
+    assert message == "Argument \"matching\" has invalid value 123."
+  end
 end
