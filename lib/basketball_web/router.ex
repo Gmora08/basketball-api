@@ -13,6 +13,12 @@ defmodule BasketballWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/", BasketballWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+  end
+
   scope "/" do
     pipe_through :api
 
