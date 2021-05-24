@@ -61,4 +61,26 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
     assert %{"errors" => [%{"message" => message}]} = json_response(response, 200)
     assert message == "Argument \"matching\" has invalid value 123."
   end
+
+  @query """
+  query($term: String) {
+    leagues(matching: $term) {
+      acronym
+    }
+  }
+  """
+  @variables %{"term" => "NBA"}
+  test "returns leagues filtered by acronym using variables", %{conn: conn} do
+    league_fixture(%{acronym: "NBA"})
+    league_fixture(%{acronym: "LNBP"})
+    response = get(conn, "/api", query: @query, variables: @variables)
+
+    assert json_response(response, 200) == %{
+      "data" => %{
+        "leagues" => [
+          %{"acronym" => "NBA"}
+        ]
+      }
+    }
+  end
 end
