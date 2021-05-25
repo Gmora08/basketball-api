@@ -50,7 +50,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
   @query """
   {
-    leagues(matching: "NBA") {
+    leagues(filter: {acronym: "NBA"}) {
       acronym
     }
   }
@@ -71,7 +71,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
   @query """
   {
-    leagues(matching: 123) {
+    leagues(filter: {acronym: 123}) {
       acronym
     }
   }
@@ -82,17 +82,17 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
     response = get(conn, "/api", query: @query)
 
     assert %{"errors" => [%{"message" => message}]} = json_response(response, 200)
-    assert message == "Argument \"matching\" has invalid value 123."
+    assert message == "Argument \"filter\" has invalid value {acronym: 123}.\nIn field \"acronym\": Expected type \"String\", found 123."
   end
 
   @query """
-  query($term: String) {
-    leagues(matching: $term) {
+  query($filter: LeagueFilter!) {
+    leagues(filter: $filter) {
       acronym
     }
   }
   """
-  @variables %{"term" => "NBA"}
+  @variables %{"filter" => %{"acronym" => "NBA"}}
   test "returns leagues filtered by acronym using variables", %{conn: conn} do
     league_fixture(%{acronym: "NBA"})
     league_fixture(%{acronym: "LNBP"})
