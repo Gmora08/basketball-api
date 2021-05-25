@@ -17,11 +17,39 @@ defmodule Basketball do
     |> Repo.insert()
   end
 
-  def league_items(%{matching: acronym}) when is_binary(acronym) do
-    League
-    |> where([l], ilike(l.acronym, ^"%#{acronym}%"))
+  def league_items(filters) do
+    filters
+    |> Enum.reduce(League, fn
+      {_, nil}, query -> query
+      {:order, order}, query ->
+        from q in query, order_by: {^order, :acronym}
+      {:filter, filter}, query ->
+        filter_with(query, filter)
+    end)
     |> Repo.all()
   end
 
-  def league_items(_), do: Repo.all(League)
+  defp filter_with(query, filter) do
+    Enum.reduce(filter, query, fn
+      {:id, id}, query ->
+        with_id(query, id)
+      {:acronym, acronym}, query ->
+        with_acronym(query, acronym)
+
+      {:name, name}, query ->
+        with_name(query, name)
+    end)
+  end
+
+  defp with_id(query, id) do
+    from q in query, where: q.id == ^id
+  end
+
+  defp with_name(query, name) do
+    from q in query, where: ilike(q.name, ^"%#{name}%")
+  end
+
+  defp with_acronym(query, acronym) do
+    from q in query, where: q.acronym == ^acronym
+  end
 end

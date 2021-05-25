@@ -18,6 +18,29 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
     assert json_response(conn, 200) == %{
       "data" => %{
         "leagues" => [
+          %{"acronym" => "LNBP"},
+          %{"acronym" => "NBA"}
+        ]
+      }
+    }
+  end
+
+  @query """
+  {
+    leagues(order: DESC) {
+      acronym
+    }
+  }
+  """
+  test "leagues query returns a list of leagues ordered by acronym desc", %{conn: conn} do
+    league_fixture(%{acronym: "NBA"})
+    league_fixture(%{acronym: "LNBP"})
+
+    conn = get conn, "/api", query: @query
+
+    assert json_response(conn, 200) == %{
+      "data" => %{
+        "leagues" => [
           %{"acronym" => "NBA"},
           %{"acronym" => "LNBP"}
         ]
