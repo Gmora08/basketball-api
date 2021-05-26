@@ -3,6 +3,7 @@ defmodule BasketballWeb.Schema do
 
   import_types BasketballWeb.Types
   import_types BasketballWeb.Queries.League
+  import_types BaskteballWeb.Types.Team
   import_types BasketballWeb.Types.League
 
   query do

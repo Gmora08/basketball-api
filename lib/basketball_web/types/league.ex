@@ -9,6 +9,9 @@ defmodule BasketballWeb.Types.League do
     field :name, :string
     field :acronym, :string
     field :foundation, :date
+    field :teams, list_of(:team_item) do
+      resolve &BasketballWeb.Resolvers.Team.teams_by_league/3
+    end
   end
 
   @desc "Filtering options for leagues query"

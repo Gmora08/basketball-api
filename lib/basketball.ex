@@ -8,13 +8,23 @@ defmodule Basketball do
   """
   import Ecto.Query
 
-  alias Basketball.BdSchemas.League
+  alias Basketball.BdSchemas.{League, Team}
   alias Basketball.Repo
 
   def create_league(attrs) do
     %League{}
     |> League.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def team_items(_) do
+    Repo.all(Team)
+  end
+
+  def teams_by_league(league, _filters) do
+    query = Ecto.assoc(league, :teams)
+
+    Repo.all(query)
   end
 
   def league_items(filters) do
