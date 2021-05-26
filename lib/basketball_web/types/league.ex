@@ -6,7 +6,7 @@ defmodule BasketballWeb.Types.League do
     field :id, :id
     field :name, :string
     field :acronym, :string
-    field :foundation, :string
+    field :foundation, :date
   end
 
   @desc "Filtering options for leagues query"
@@ -19,5 +19,18 @@ defmodule BasketballWeb.Types.League do
 
     @desc "Matching name"
     field :name, :string
+  end
+
+  scalar :date do
+    parse fn input ->
+      case Date.from_iso8601(input.value) do
+        {:ok, date} -> {:ok, date}
+        _ -> :error
+      end
+    end
+
+    serialize fn date ->
+      Date.to_iso8601(date)
+    end
   end
 end
