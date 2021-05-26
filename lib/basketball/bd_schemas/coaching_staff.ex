@@ -12,8 +12,8 @@ defmodule Basketball.BdSchemas.CoachingStaff do
     field :from, :date
     field :rol, :string
     field :to, :date
-    belongs_to :coaches, Coach
-    belongs_to :teams, Team
+    belongs_to :coaches, Coach, foreign_key: :coach_id
+    belongs_to :teams, Team, foreign_key: :team_id
 
     timestamps()
   end

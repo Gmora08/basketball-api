@@ -9,10 +9,10 @@ defmodule Basketball.BdSchemas.Championship do
   @allowed_attributes @required_attributes ++ @optional_attributes
 
   schema "championships" do
-    field :year, :string
+    field :year, :integer
     # mvp
-    belongs_to :players, Player
-    belongs_to :teams, Team
+    belongs_to :players, Player, foreign_key: :player_id
+    belongs_to :teams, Team, foreign_key: :team_id
 
     timestamps()
   end

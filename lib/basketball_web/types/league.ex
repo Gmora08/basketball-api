@@ -12,7 +12,7 @@ defmodule BasketballWeb.Types.League do
   @desc "Filtering options for leagues query"
   input_object :league_filter do
     @desc "Matching id"
-    field :id, non_null(:integer)
+    field :id, :integer
 
     @desc "Matching acronym"
     field :acronym, :string

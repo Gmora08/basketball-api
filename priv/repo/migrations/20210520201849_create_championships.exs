@@ -3,7 +3,7 @@ defmodule Basketball.Repo.Migrations.CreateChampionships do
 
   def change do
     create table(:championships) do
-      add :year, :string
+      add :year, :integer
       add :team_id, references(:teams, on_delete: :delete_all)
       add :mvp, references(:players, on_delete: :delete_all)
 

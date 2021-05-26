@@ -10,13 +10,13 @@ defmodule Basketball.BdSchemas.Team do
 
   schema "teams" do
     field :city, :string
-    field :foundation, :string
+    field :foundation, :date
     field :logo, :string
     field :name, :string
     has_many :championships, Championship
     many_to_many :players, Player, join_through: Roster
     many_to_many :coaches, Coach, join_through: CoachingStaff
-    belongs_to :leagues, League
+    belongs_to :leagues, League, foreign_key: :league_id
 
     timestamps()
   end

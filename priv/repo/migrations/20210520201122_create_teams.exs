@@ -6,7 +6,7 @@ defmodule Basketball.Repo.Migrations.CreateTeams do
       add :name, :string
       add :city, :string
       add :logo, :string
-      add :foundation, :string
+      add :foundation, :date
       add :league_id, references(:leagues, on_delete: :delete_all)
 
       timestamps()

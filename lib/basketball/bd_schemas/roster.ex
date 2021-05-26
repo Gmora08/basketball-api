@@ -13,8 +13,8 @@ defmodule Basketball.BdSchemas.Roster do
     field :from, :date
     field :number, :string
     field :to, :date, default: nil
-    belongs_to :teams, Team
-    belongs_to :players, Player
+    belongs_to :teams, Team, foreign_key: :team_id
+    belongs_to :players, Player, foreign_key: :player_id
 
     timestamps()
   end
