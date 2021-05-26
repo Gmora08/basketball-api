@@ -4,7 +4,7 @@ defmodule BasketballWeb.Types.League do
   alias Absinthe.Blueprint
 
   @desc "A league from around the world e.g. (NBA, LNBP)"
-  object :league do
+  object :league_item do
     field :id, :id
     field :name, :string
     field :acronym, :string

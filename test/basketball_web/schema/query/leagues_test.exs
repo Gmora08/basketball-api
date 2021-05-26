@@ -4,7 +4,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
   @query """
   {
-    leagues {
+    leagueItems {
       acronym
     }
   }
@@ -17,7 +17,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
     assert json_response(conn, 200) == %{
       "data" => %{
-        "leagues" => [
+        "leagueItems" => [
           %{"acronym" => "LNBP"},
           %{"acronym" => "NBA"}
         ]
@@ -27,7 +27,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
   @query """
   {
-    leagues(order: DESC) {
+    leagueItems(order: DESC) {
       acronym
     }
   }
@@ -40,7 +40,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
     assert json_response(conn, 200) == %{
       "data" => %{
-        "leagues" => [
+        "leagueItems" => [
           %{"acronym" => "NBA"},
           %{"acronym" => "LNBP"}
         ]
@@ -50,7 +50,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
   @query """
   {
-    leagues(filter: {acronym: "NBA"}) {
+    leagueItems(filter: {acronym: "NBA"}) {
       acronym
     }
   }
@@ -62,7 +62,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
     assert json_response(response, 200) == %{
       "data" => %{
-        "leagues" => [
+        "leagueItems" => [
           %{"acronym" => "NBA"}
         ]
       }
@@ -71,7 +71,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
   @query """
   {
-    leagues(filter: {acronym: 123}) {
+    leagueItems(filter: {acronym: 123}) {
       acronym
     }
   }
@@ -87,7 +87,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
   @query """
   query($filter: LeagueFilter!) {
-    leagues(filter: $filter) {
+    leagueItems(filter: $filter) {
       acronym
     }
   }
@@ -100,7 +100,7 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
 
     assert json_response(response, 200) == %{
       "data" => %{
-        "leagues" => [
+        "leagueItems" => [
           %{"acronym" => "NBA"}
         ]
       }
