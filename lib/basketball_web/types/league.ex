@@ -1,6 +1,8 @@
 defmodule BasketballWeb.Types.League do
   use Absinthe.Schema.Notation
 
+  alias Absinthe.Blueprint
+
   @desc "A league from around the world e.g. (NBA, LNBP)"
   object :league do
     field :id, :id
@@ -29,8 +31,10 @@ defmodule BasketballWeb.Types.League do
 
   scalar :date do
     parse fn input ->
-      case Date.from_iso8601(input.value) do
-        {:ok, date} -> {:ok, date}
+      with %Blueprint.Input.String{value: value} <- input,
+           {:ok, date} <- Date.from_iso8601(value) do
+        {:ok, date}
+      else
         _ -> :error
       end
     end
