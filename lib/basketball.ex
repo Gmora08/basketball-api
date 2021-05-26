@@ -38,6 +38,12 @@ defmodule Basketball do
 
       {:name, name}, query ->
         with_name(query, name)
+
+      {:founded_before, date}, query ->
+        before_date(query, date)
+
+      {:founded_after, date}, query ->
+        after_date(query, date)
     end)
   end
 
@@ -51,5 +57,13 @@ defmodule Basketball do
 
   defp with_acronym(query, acronym) do
     from q in query, where: q.acronym == ^acronym
+  end
+
+  defp after_date(query, date) do
+    from q in query, where: ^date <= q.foundation
+  end
+
+  defp before_date(query, date) do
+    from q in query, where: ^date >= q.foundation
   end
 end

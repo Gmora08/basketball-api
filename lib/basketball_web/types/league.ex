@@ -19,6 +19,12 @@ defmodule BasketballWeb.Types.League do
 
     @desc "Matching name"
     field :name, :string
+
+    @desc "League founded before this date"
+    field :founded_before, :date
+
+    @desc "League founded after this date"
+    field :founded_after, :date
   end
 
   scalar :date do
