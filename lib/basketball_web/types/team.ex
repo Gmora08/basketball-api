@@ -5,6 +5,7 @@ defmodule BaskteballWeb.Types.Team do
 
   @desc "Teams composing a league"
   object :team_item do
+    interfaces [:search_result]
     field :id, :id
     field :foundation, :date_team
     field :city, :string

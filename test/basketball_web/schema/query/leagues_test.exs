@@ -106,4 +106,27 @@ defmodule BasketballWeb.Schema.Query.LeaguesTest do
       }
     }
   end
+
+  @query """
+  query($filter: LeagueFilter) {
+    leagueItems(filter: $filter) {
+      id
+    }
+  }
+  """
+  test "returns the league with the given id associated", %{conn: conn} do
+    league = league_fixture(%{acronym: "NBA"})
+    league_fixture(%{acronym: "LNBP"})
+    variables = %{"filter" => %{"id" => league.id}}
+
+    response = get(conn, "/api", query: @query, variables: Jason.encode!(variables))
+
+    assert json_response(response, 200) == %{
+      "data" => %{
+        "leagueItems" => [
+          %{"id" => "#{league.id}"}
+        ]
+      }
+    }
+  end
 end

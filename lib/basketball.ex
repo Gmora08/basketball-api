@@ -39,6 +39,17 @@ defmodule Basketball do
     |> Repo.all()
   end
 
+  @search [League, Team]
+  def search(id) do
+    Enum.flat_map(@search, &search_ecto(&1, id))
+  end
+
+  defp search_ecto(ecto_schema, id) do
+    Repo.all(
+      from q in ecto_schema, where: q.id == ^id
+    )
+  end
+
   defp filter_with(query, filter) do
     Enum.reduce(filter, query, fn
       {:id, id}, query ->

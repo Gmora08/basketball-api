@@ -5,6 +5,7 @@ defmodule BasketballWeb.Types.League do
 
   @desc "A league from around the world e.g. (NBA, LNBP)"
   object :league_item do
+    interfaces [:search_result]
     field :id, :id
     field :name, :string
     field :acronym, :string
