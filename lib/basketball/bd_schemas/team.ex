@@ -27,5 +27,6 @@ defmodule Basketball.BdSchemas.Team do
     |> cast(attrs, @allowed_attributes)
     |> validate_required(@required_attributes)
     |> foreign_key_constraint(:league_id)
+    |> unique_constraint(:name)
   end
 end

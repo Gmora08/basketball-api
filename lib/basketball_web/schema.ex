@@ -11,4 +11,13 @@ defmodule BasketballWeb.Schema do
     import_fields :league_queries
     import_fields :search_queries
   end
+
+  mutation do
+    field :create_team_item, :team_item do
+      @desc "Creates a new team"
+      arg :input, non_null(:team_item_input)
+      resolve &BasketballWeb.Resolvers.Team.create_team/3
+      middleware BasketballWeb.Middleware.ChangesetErrors
+    end
+  end
 end

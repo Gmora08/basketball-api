@@ -17,6 +17,12 @@ defmodule Basketball do
     |> Repo.insert()
   end
 
+  def create_team(attrs) do
+    %Team{}
+    |> Team.changeset(attrs)
+    |> Repo.insert()
+  end
+
   def team_items(_) do
     Repo.all(Team)
   end
